@@ -1,0 +1,32 @@
+# 指定 CMake 的最低版本要求
+cmake_minimum_required(VERSION 3.12)
+
+# 项目名称和语言
+project(OpenGL_project)
+
+# 设置 C++ 标准
+set(CMAKE_CXX_STANDARD 17)
+
+file(GLOB MODEL "./model")
+
+file(COPY ${MODEL} DESTINATION ${CMAKE_BINARY_DIR})
+
+# 如果有需要，可以添加包含目录
+include_directories(
+	SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/third_party/include
+)
+
+# 如果有需要，可以添加链接库
+link_directories(
+	SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/third_party/lib
+)
+
+
+# 定义一个可执行文件，其由 main.cpp 编译而来
+add_executable(GL_starter "main.cpp" "glad.c" "ModelImporter.h" "ModelImporter.cpp")
+
+target_link_libraries(GL_starter glfw3.lib)
+
+# 如果有需要，可以添加测试
+# enable_testing()
+# add_test(NAME MyTest COMMAND MyExecutable)
